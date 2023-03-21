@@ -11,7 +11,7 @@ const TURNS = {
 const WINNER = {
   X: 'x',
   O: 'o',
-  Draw: 'draw',
+  Draw: 'Draw',
   NoWinner: null,
 };
 
