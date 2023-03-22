@@ -2,29 +2,8 @@ import { useState } from 'react';
 import './App.css';
 import { Square } from './components/Square';
 import { WinnerModal } from './components/WinnerModal';
-
-const TURNS = {
-  X: 'x',
-  O: 'o',
-};
-
-const WINNER = {
-  X: 'x',
-  O: 'o',
-  Draw: 'Draw',
-  NoWinner: null,
-};
-
-const WINNER_COMBOS = [
-  [0, 1, 2],
-  [3, 4, 5],
-  [6, 7, 8],
-  [0, 3, 6],
-  [1, 4, 7],
-  [2, 5, 8],
-  [0, 4, 8],
-  [2, 4, 6],
-];
+import { TURNS, WINNER } from './constants';
+import { checkEndGame, checkWinner } from './logic/board';
 
 function App() {
   const [board, setBoard] = useState(Array(9).fill(null));
@@ -32,24 +11,6 @@ function App() {
   const [turn, setTurn] = useState(TURNS.X);
 
   const [winner, setWinner] = useState(WINNER.NoWinner);
-
-  const checkWinner = boardToCheck => {
-    for (const combo of WINNER_COMBOS) {
-      const [a, b, c] = combo;
-      if (
-        boardToCheck[a] &&
-        boardToCheck[a] === boardToCheck[b] &&
-        boardToCheck[a] === boardToCheck[c]
-      ) {
-        return boardToCheck[a];
-      }
-    }
-
-    return WINNER.NoWinner;
-  };
-
-  const checkEndGame = boardToCheck =>
-    boardToCheck.every(square => square !== null);
 
   const updateBoard = index => {
     if (board[index] || winner) return;
