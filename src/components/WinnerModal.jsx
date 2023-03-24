@@ -1,18 +1,14 @@
+import { WINNER } from '../constants.js';
 import { Square } from './Square.jsx';
 
 export const WinnerModal = ({ winner, resetGame }) => {
-  if (winner === null) return null;
-
-  const winnerText = winner === 'Draw' ? 'Draw!' : 'Win:';
+  const winnerText =
+    winner === WINNER.Tie ? "It's a tie!" : `${winner.toUpperCase()} wins!`;
 
   return (
     <section className='winner'>
       <div className='text'>
         <h2>{winnerText}</h2>
-
-        {winner !== 'Draw' && (
-          <header className='win'>{winner && <Square>{winner}</Square>}</header>
-        )}
 
         <footer>
           <button onClick={resetGame}>Reset game</button>

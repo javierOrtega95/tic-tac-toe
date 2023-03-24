@@ -27,7 +27,7 @@ function App() {
     if (newWinner) {
       setWinner(newWinner);
     } else if (checkEndGame(newBoard)) {
-      setWinner(WINNER.Draw);
+      setWinner(WINNER.Tie);
     }
   };
 
@@ -39,7 +39,7 @@ function App() {
 
   return (
     <main className='board'>
-      <h1>Tic tac toe</h1>
+      <h1>Tic Tac Toe</h1>
       <section className='game'>
         {board.map((_, index) => {
           return (
@@ -54,7 +54,9 @@ function App() {
         <Square isSelected={turn === TURNS.O}>{TURNS.O}</Square>
       </section>
 
-      <WinnerModal winner={winner} resetGame={resetGame} />
+      {winner !== WINNER.NoWinner && (
+        <WinnerModal winner={winner} resetGame={resetGame} />
+      )}
     </main>
   );
 }

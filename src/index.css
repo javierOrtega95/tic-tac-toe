@@ -110,14 +110,6 @@ body {
   gap: 20px;
 }
 
-.winner .win {
-  margin: 0 auto;
-  width: fit-content;
-  border-radius: 10px;
-  display: flex;
-  gap: 15px;
-}
-
 .square {
   width: 100px;
   height: 100px;
