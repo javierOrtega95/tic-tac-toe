@@ -1,5 +1,4 @@
 import { WINNER } from '../constants.js';
-import { Square } from './Square.jsx';
 
 export const WinnerModal = ({ winner, resetGame }) => {
   const winnerText =
