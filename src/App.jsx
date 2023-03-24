@@ -1,17 +1,28 @@
+import confetti from 'canvas-confetti';
 import { useState } from 'react';
 import './App.css';
 import { Square } from './components/Square';
 import { WinnerModal } from './components/WinnerModal';
 import { TURNS, WINNER } from './constants';
 import { checkEndGame, checkWinner } from './logic/board';
-import confetti from 'canvas-confetti';
+import { resetGameStorage, saveGameToStorage } from './logic/storage';
 
 function App() {
-  const [board, setBoard] = useState(Array(9).fill(null));
+  const [board, setBoard] = useState(() => {
+    const boardFromStorage = window.localStorage.getItem('board');
+    if (boardFromStorage) return JSON.parse(boardFromStorage);
+    return Array(9).fill(null);
+  });
 
-  const [turn, setTurn] = useState(TURNS.X);
+  const [turn, setTurn] = useState(() => {
+    const turnFromStorage = window.localStorage.getItem('turn');
+    return turnFromStorage ?? TURNS.X;
+  });
 
-  const [winner, setWinner] = useState(WINNER.NoWinner);
+  const [winner, setWinner] = useState(() => {
+    const winnerFromStorage = window.localStorage.getItem('winner');
+    return winnerFromStorage ?? WINNER.NoWinner;
+  });
 
   const updateBoard = index => {
     if (board[index] || winner) return;
@@ -28,15 +39,32 @@ function App() {
     if (newWinner) {
       confetti();
       setWinner(newWinner);
+      saveGameToStorage({
+        board: newBoard,
+        turn: newTurn,
+        winner: newWinner,
+      });
     } else if (checkEndGame(newBoard)) {
       setWinner(WINNER.Tie);
+      saveGameToStorage({
+        board: newBoard,
+        turn: newTurn,
+        winner: WINNER.Tie,
+      });
     }
+
+    saveGameToStorage({
+      board: newBoard,
+      turn: newTurn,
+    });
   };
 
   const resetGame = () => {
     setBoard(Array(9).fill(null));
     setTurn(TURNS.X);
     setWinner(WINNER.NoWinner);
+
+    resetGameStorage();
   };
 
   return (

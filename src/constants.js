@@ -6,7 +6,7 @@ export const TURNS = {
 export const WINNER = {
   X: 'x',
   O: 'o',
-  Tie: false,
+  Tie: 'tie',
   NoWinner: null,
 };
 
